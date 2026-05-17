@@ -1,0 +1,15 @@
+# Core - Grafos e Algoritmos
+networkx==3.2.1
+
+# Interface Web
+streamlit==1.31.1
+
+# Visualização de Grafos
+pyvis==0.3.2
+
+# Manipulação de Dados
+pandas==2.2.0
+
+# Testes
+pytest==8.0.0
+pytest-cov==4.1.0
