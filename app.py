@@ -2,6 +2,7 @@
 app.py — Streamlit: Otimização de Rede de Fibra Óptica em The Continent
 """
 import base64
+import json
 from pathlib import Path
 
 import plotly.graph_objects as go
@@ -20,12 +21,12 @@ st.set_page_config(
     layout="wide",
 )
 
-DATASET  = Path("src/data/the_continent_kingdoms.json")
-MAP_PATH = Path("src/assets/the_continent_map.jpg")
+DATASET       = Path("src/data/the_continent_kingdoms.json")
+MAP_PATH      = Path("src/assets/the_continent_map.jpg")
+PIXEL_COORDS  = Path("src/data/kingdom_pixel_coords.json")
 
-# Espaço de coordenadas usado no dataset (referência: canto noroeste do mapa)
-MAP_X_MAX = 750
-MAP_Y_MAX = 1100
+IMG_W = 2880
+IMG_H = 4096
 
 REGION_COLORS = {
     "norte":   "#5B9BD5",
@@ -35,6 +36,25 @@ REGION_COLORS = {
 
 COLOR_MST_EDGE = "#F4C430"
 COLOR_ALL_EDGE = "#888888"
+
+
+# -----------------------------------------------------------------------
+# Coordenadas de pixel (calibradas via calibrate.py)
+# -----------------------------------------------------------------------
+@st.cache_data
+def load_pixel_coords() -> dict:
+    if PIXEL_COORDS.exists():
+        with open(PIXEL_COORDS, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+
+def get_px(node_id: str, coords_x: float, coords_y: float, pixel_coords: dict) -> tuple[float, float]:
+    """Retorna coordenadas de pixel: usa JSON calibrado se disponível."""
+    if node_id in pixel_coords:
+        return float(pixel_coords[node_id]["x"]), float(pixel_coords[node_id]["y"])
+    # Fallback: transformação linear (valores padrão razoáveis)
+    return coords_x * 3.5 - 180, coords_y * 3.1 - 80
 
 
 # -----------------------------------------------------------------------
@@ -56,9 +76,9 @@ def get_result(algorithm: str):
 # -----------------------------------------------------------------------
 # Figura Plotly
 # -----------------------------------------------------------------------
-def build_figure(neighborhoods, connections, result, show_all_edges: bool) -> go.Figure:
+def build_figure(neighborhoods, connections, result, show_all_edges: bool,
+                 pixel_coords: dict) -> go.Figure:
     node_map = {n.id: n for n in neighborhoods}
-    mst_pairs = {frozenset({e.source, e.target}) for e in result.mst_edges}
 
     fig = go.Figure()
 
@@ -70,7 +90,7 @@ def build_figure(neighborhoods, connections, result, show_all_edges: bool) -> go
             source=f"data:image/{ext};base64,{encoded}",
             xref="x", yref="y",
             x=0, y=0,
-            sizex=MAP_X_MAX, sizey=MAP_Y_MAX,
+            sizex=IMG_W, sizey=IMG_H,
             sizing="stretch",
             opacity=1,
             layer="below",
@@ -83,9 +103,11 @@ def build_figure(neighborhoods, connections, result, show_all_edges: bool) -> go
         for c in connections:
             src = node_map[c["source"]]
             tgt = node_map[c["target"]]
+            sx, sy = get_px(src.id, src.coords.x, src.coords.y, pixel_coords)
+            tx, ty = get_px(tgt.id, tgt.coords.x, tgt.coords.y, pixel_coords)
             fig.add_trace(go.Scatter(
-                x=[src.coords.x, tgt.coords.x, None],
-                y=[src.coords.y, tgt.coords.y, None],
+                x=[sx, tx, None],
+                y=[sy, ty, None],
                 mode="lines",
                 line=dict(color=COLOR_ALL_EDGE, width=1, dash="dot"),
                 hoverinfo="skip",
@@ -97,8 +119,10 @@ def build_figure(neighborhoods, connections, result, show_all_edges: bool) -> go
     for e in result.mst_edges:
         src = node_map[e.source]
         tgt = node_map[e.target]
-        mst_x += [src.coords.x, tgt.coords.x, None]
-        mst_y += [src.coords.y, tgt.coords.y, None]
+        sx, sy = get_px(src.id, src.coords.x, src.coords.y, pixel_coords)
+        tx, ty = get_px(tgt.id, tgt.coords.x, tgt.coords.y, pixel_coords)
+        mst_x += [sx, tx, None]
+        mst_y += [sy, ty, None]
 
     fig.add_trace(go.Scatter(
         x=mst_x, y=mst_y,
@@ -112,10 +136,10 @@ def build_figure(neighborhoods, connections, result, show_all_edges: bool) -> go
     for e in result.mst_edges:
         src = node_map[e.source]
         tgt = node_map[e.target]
-        mid_x = (src.coords.x + tgt.coords.x) / 2
-        mid_y = (src.coords.y + tgt.coords.y) / 2
+        sx, sy = get_px(src.id, src.coords.x, src.coords.y, pixel_coords)
+        tx, ty = get_px(tgt.id, tgt.coords.x, tgt.coords.y, pixel_coords)
         fig.add_trace(go.Scatter(
-            x=[mid_x], y=[mid_y],
+            x=[(sx + tx) / 2], y=[(sy + ty) / 2],
             mode="markers",
             marker=dict(size=10, color=COLOR_MST_EDGE, opacity=0.4),
             showlegend=False,
@@ -128,14 +152,15 @@ def build_figure(neighborhoods, connections, result, show_all_edges: bool) -> go
             ),
         ))
 
-    # Nós por região (para legenda com cor)
+    # Nós por região
     for region, color in REGION_COLORS.items():
         nodes = [n for n in neighborhoods if n.region == region]
         if not nodes:
             continue
+        px_list = [get_px(n.id, n.coords.x, n.coords.y, pixel_coords) for n in nodes]
         fig.add_trace(go.Scatter(
-            x=[n.coords.x for n in nodes],
-            y=[n.coords.y for n in nodes],
+            x=[p[0] for p in px_list],
+            y=[p[1] for p in px_list],
             mode="markers+text",
             marker=dict(
                 size=14,
@@ -145,10 +170,10 @@ def build_figure(neighborhoods, connections, result, show_all_edges: bool) -> go
             ),
             text=[n.name for n in nodes],
             textposition="top center",
-            textfont=dict(size=10, color="white",
-                          family="Georgia, serif"),
+            textfont=dict(size=10, color="white", family="Georgia, serif"),
             name=region.capitalize(),
-            customdata=[[n.name, n.region.capitalize(), n.capital or "—", n.population] for n in nodes],
+            customdata=[[n.name, n.region.capitalize(), n.capital or "—", n.population]
+                        for n in nodes],
             hovertemplate=(
                 "<b>%{customdata[0]}</b><br>"
                 "Região: %{customdata[1]}<br>"
@@ -159,8 +184,8 @@ def build_figure(neighborhoods, connections, result, show_all_edges: bool) -> go
         ))
 
     fig.update_layout(
-        xaxis=dict(range=[0, MAP_X_MAX], showgrid=False, zeroline=False, showticklabels=False),
-        yaxis=dict(range=[MAP_Y_MAX, 0], showgrid=False, zeroline=False, showticklabels=False),
+        xaxis=dict(range=[0, IMG_W], showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(range=[IMG_H, 0], showgrid=False, zeroline=False, showticklabels=False),
         margin=dict(l=0, r=0, t=0, b=0),
         paper_bgcolor="#0d1117",
         plot_bgcolor="#0d1117",
@@ -173,7 +198,7 @@ def build_figure(neighborhoods, connections, result, show_all_edges: bool) -> go
             xanchor="left",
             yanchor="bottom",
         ),
-        height=720,
+        height=850,
     )
 
     return fig
@@ -195,6 +220,11 @@ with st.sidebar:
     show_all = st.checkbox("Mostrar todas as conexões disponíveis", value=False)
 
     st.divider()
+    st.caption(
+        "Para ajustar posições dos reinos no mapa, rode:\n"
+        "`streamlit run calibrate.py`"
+    )
+    st.divider()
     st.caption("Projeto: Otimização de Rede de Fibra Óptica\nThe Continent (The Witcher)\n2025")
 
 
@@ -209,17 +239,20 @@ st.caption(
 
 if not MAP_PATH.exists():
     st.warning(
-        "Mapa não encontrado. Salve a imagem em `assets/the_continent_map.jpg` "
-        "para exibi-la como fundo.",
+        "Mapa não encontrado. Salve a imagem em `src/assets/the_continent_map.jpg`.",
         icon="⚠️",
     )
 
 neighborhoods, connections, solver = get_data()
-result = get_result(algorithm)
+result       = get_result(algorithm)
+pixel_coords = load_pixel_coords()
 
-# Mapa interativo
-fig = build_figure(neighborhoods, connections, result, show_all_edges=show_all)
-st.plotly_chart(fig, width="stretch")
+# Mapa interativo — centralizado
+fig = build_figure(neighborhoods, connections, result,
+                   show_all_edges=show_all, pixel_coords=pixel_coords)
+_, col_map, _ = st.columns([1, 2, 1])
+with col_map:
+    st.plotly_chart(fig, use_container_width=True)
 
 # KPIs
 st.subheader("📊 Métricas da MST")
