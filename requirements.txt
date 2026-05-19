@@ -2,7 +2,8 @@
 networkx==3.2.1
 
 # Interface Web
-streamlit==1.31.1
+streamlit==1.55.0
+plotly==5.19.0
 
 # Visualização de Grafos
 pyvis==0.3.2
