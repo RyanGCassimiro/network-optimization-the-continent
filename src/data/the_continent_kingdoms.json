@@ -14,225 +14,236 @@
       "mar": 3.5
     }
   },
-  "kingdoms": [
+
+"kingdoms": [
     {
       "id": "kovir",
       "name": "Kovir",
       "region": "norte",
-      "coords": { "x": 190, "y": 55 },
+      "coords": { "x": 210, "y": 60 },
       "capital": "Lan Exeter",
       "population_estimate": 320000,
-      "description": "Reino rico ao norte, famoso pelo comércio marítimo"
+      "description": "Reino mercantil ao extremo norte do continente"
     },
     {
       "id": "poviss",
       "name": "Poviss",
       "region": "norte",
-      "coords": { "x": 100, "y": 105 },
-      "capital": "Poviss",
+      "coords": { "x": 130, "y": 95 },
+      "capital": "Tretogor",
       "population_estimate": 210000,
-      "description": "Reino costeiro aliado a Kovir"
+      "description": "Território costeiro aliado de Kovir"
     },
     {
       "id": "hengfors_league",
       "name": "Hengfors League",
       "region": "norte",
-      "coords": { "x": 430, "y": 95 },
+      "coords": { "x": 470, "y": 110 },
       "capital": "Hengfors",
       "population_estimate": 280000,
-      "description": "Liga de cidades-estado ao nordeste"
-    },
-    {
-      "id": "kaedwen",
-      "name": "Kaedwen",
-      "region": "norte",
-      "coords": { "x": 600, "y": 145 },
-      "capital": "Ard Carraigh",
-      "population_estimate": 490000,
-      "description": "Maior reino do norte, vasto e frio"
+      "description": "Liga de cidades-estado localizada entre Kovir e Kaedwen"
     },
     {
       "id": "redania",
       "name": "Redania",
       "region": "norte",
-      "coords": { "x": 295, "y": 205 },
-      "capital": "Oxenfurt / Tretogor",
+      "coords": { "x": 380, "y": 220 },
+      "capital": "Tretogor",
       "population_estimate": 680000,
-      "description": "Reino poderoso, sede da Universidade de Oxenfurt"
+      "description": "Grande potência do norte, centrada em Tretogor"
+    },
+    {
+      "id": "kaedwen",
+      "name": "Kaedwen",
+      "region": "norte",
+      "coords": { "x": 720, "y": 170 },
+      "capital": "Ard Carraigh",
+      "population_estimate": 490000,
+      "description": "Maior reino setentrional, frio e montanhoso"
     },
     {
       "id": "aedirn",
       "name": "Aedirn",
       "region": "central",
-      "coords": { "x": 600, "y": 290 },
+      "coords": { "x": 720, "y": 320 },
       "capital": "Vengerberg",
       "population_estimate": 420000,
-      "description": "Reino montanhoso a leste, próximo a Dol Blathanna"
+      "description": "Reino oriental cercado por montanhas"
     },
     {
       "id": "dol_blathanna",
       "name": "Dol Blathanna",
       "region": "central",
-      "coords": { "x": 660, "y": 235 },
+      "coords": { "x": 780, "y": 250 },
       "capital": "Dol Blathanna",
       "population_estimate": 95000,
-      "description": "Vale dos Elfos, encravado entre Kaedwen e Aedirn"
-    },
-    {
-      "id": "lyria_rivia",
-      "name": "Lyria e Rivia",
-      "region": "central",
-      "coords": { "x": 670, "y": 345 },
-      "capital": "Rivia",
-      "population_estimate": 310000,
-      "description": "Dois reinos unidos, lar do Witcher Geralt"
+      "description": "Vale élfico entre Kaedwen e Aedirn"
     },
     {
       "id": "temeria",
       "name": "Temeria",
       "region": "central",
-      "coords": { "x": 360, "y": 330 },
+      "coords": { "x": 470, "y": 360 },
       "capital": "Vizima",
       "population_estimate": 750000,
-      "description": "Reino central e influente, governado pelos Foltest"
+      "description": "Reino central do continente"
     },
     {
-      "id": "skellige",
-      "name": "Skellige",
-      "region": "norte",
-      "coords": { "x": 65, "y": 390 },
-      "capital": "Kaer Trolde",
-      "population_estimate": 130000,
-      "description": "Arquipélago de guerreiros nórdicos no oceano"
+      "id": "lyria_rivia",
+      "name": "Lyria and Rivia",
+      "region": "central",
+      "coords": { "x": 770, "y": 380 },
+      "capital": "Rivia",
+      "population_estimate": 310000,
+      "description": "Dois reinos unidos ao sudeste de Aedirn"
+    },
+    {
+      "id": "cidaris",
+      "name": "Cidaris",
+      "region": "central",
+      "coords": { "x": 250, "y": 420 },
+      "capital": "Cidaris",
+      "population_estimate": 120000,
+      "description": "Pequeno reino costeiro ocidental"
     },
     {
       "id": "verden",
       "name": "Verden",
       "region": "central",
-      "coords": { "x": 235, "y": 430 },
+      "coords": { "x": 310, "y": 500 },
       "capital": "Verden",
       "population_estimate": 180000,
-      "description": "Pequeno reino entre Temeria e Cintra"
+      "description": "Reino ao sul de Temeria"
     },
     {
       "id": "brokilon",
       "name": "Brokilon",
       "region": "central",
-      "coords": { "x": 295, "y": 460 },
-      "capital": "Brokilon (Floresta)",
+      "coords": { "x": 400, "y": 470 },
+      "capital": "Brokilon",
       "population_estimate": 40000,
-      "description": "Floresta ancestral das Dríades, intransponível para humanos"
+      "description": "Floresta ancestral das dríades"
     },
     {
       "id": "cintra",
       "name": "Cintra",
       "region": "central",
-      "coords": { "x": 345, "y": 510 },
+      "coords": { "x": 430, "y": 590 },
       "capital": "Cintra",
       "population_estimate": 390000,
-      "description": "Reino de Calanthe, lar da Princesa Ciri"
+      "description": "Reino ao sul de Temeria"
     },
     {
-      "id": "toussaint",
-      "name": "Toussaint",
-      "region": "sul",
-      "coords": { "x": 660, "y": 490 },
-      "capital": "Beauclair",
-      "population_estimate": 220000,
-      "description": "Ducado vassalo de Nilfgaard, famoso pelo vinho"
+      "id": "skellige",
+      "name": "Skellige",
+      "region": "ilhas",
+      "coords": { "x": 120, "y": 420 },
+      "capital": "Kaer Trolde",
+      "population_estimate": 130000,
+      "description": "Arquipélago de clãs guerreiros"
     },
     {
       "id": "nazair",
       "name": "Nazair",
       "region": "sul",
-      "coords": { "x": 270, "y": 580 },
+      "coords": { "x": 360, "y": 700 },
       "capital": "Nazair",
       "population_estimate": 195000,
-      "description": "Reino ao sul de Cintra, território disputado"
+      "description": "Província ao sul de Cintra"
     },
     {
       "id": "maq_turga",
-      "name": "Maq Turga",
+      "name": "Mag Turga",
       "region": "sul",
-      "coords": { "x": 450, "y": 590 },
-      "capital": "Maq Turga",
+      "coords": { "x": 560, "y": 650 },
+      "capital": "Mag Turga",
       "population_estimate": 170000,
-      "description": "Reino central-sul com terreno acidentado"
+      "description": "Região montanhosa central do sul"
+    },
+    {
+      "id": "toussaint",
+      "name": "Toussaint",
+      "region": "sul",
+      "coords": { "x": 760, "y": 620 },
+      "capital": "Beauclair",
+      "population_estimate": 220000,
+      "description": "Ducado vassalo de Nilfgaard"
     },
     {
       "id": "metinna",
       "name": "Metinna",
       "region": "sul",
-      "coords": { "x": 295, "y": 690 },
+      "coords": { "x": 430, "y": 810 },
       "capital": "Metinna",
       "population_estimate": 240000,
-      "description": "Reino ao sul de Nazair, domínio nilfgaardiano"
+      "description": "Importante território agrícola do sul"
     },
     {
       "id": "geso",
       "name": "Geso",
       "region": "sul",
-      "coords": { "x": 590, "y": 650 },
-      "capital": "Geso",
+      "coords": { "x": 740, "y": 810 },
+      "capital": "Yarra",
       "population_estimate": 155000,
-      "description": "Reino a sudeste, próximo ao Deserto de Korath"
+      "description": "Território oriental próximo ao Deserto de Korath"
     },
     {
       "id": "ebbing",
       "name": "Ebbing",
       "region": "sul",
-      "coords": { "x": 330, "y": 790 },
+      "coords": { "x": 420, "y": 930 },
       "capital": "Salm",
       "population_estimate": 200000,
-      "description": "Reino ao sul, entre Metinna e Gemmera"
+      "description": "Província do sudoeste nilfgaardiano"
     },
     {
       "id": "maecht",
       "name": "Maecht",
       "region": "sul",
-      "coords": { "x": 510, "y": 755 },
+      "coords": { "x": 620, "y": 900 },
       "capital": "Maecht",
       "population_estimate": 175000,
-      "description": "Reino entre Geso e Ebbing"
+      "description": "Território entre Ebbing e Geso"
     },
     {
       "id": "gemmera",
       "name": "Gemmera",
       "region": "sul",
-      "coords": { "x": 450, "y": 860 },
+      "coords": { "x": 610, "y": 1030 },
       "capital": "Gemmera",
       "population_estimate": 190000,
-      "description": "Reino ao sul de Ebbing e Maecht"
+      "description": "Região ao sul de Maecht"
     },
     {
       "id": "etolia",
       "name": "Etolia",
       "region": "sul",
-      "coords": { "x": 340, "y": 930 },
+      "coords": { "x": 470, "y": 1150 },
       "capital": "Etolia",
       "population_estimate": 145000,
-      "description": "Reino meridional, perto da fronteira nilfgaardiana"
+      "description": "Território sudoeste próximo ao Império"
     },
     {
       "id": "vicovaro",
       "name": "Vicovaro",
       "region": "sul",
-      "coords": { "x": 605, "y": 890 },
+      "coords": { "x": 760, "y": 1140 },
       "capital": "Vicovaro",
       "population_estimate": 160000,
-      "description": "Província nilfgaardiana ao sudeste"
+      "description": "Província oriental nilfgaardiana"
     },
     {
       "id": "nilfgaard",
       "name": "Nilfgaard",
       "region": "imperio_sul",
-      "coords": { "x": 430, "y": 1010 },
-      "capital": "Nilfgaard (Cidade Dourada)",
+      "coords": { "x": 620, "y": 1290 },
+      "capital": "Nilfgaard",
       "population_estimate": 2100000,
-      "description": "Império do Sul, a maior potência do continente"
+      "description": "Capital do Império Nilfgaardiano"
     }
   ],
-  "connections": [
+
+"connections": [
     {
       "id": "c01",
       "source": "kovir",
