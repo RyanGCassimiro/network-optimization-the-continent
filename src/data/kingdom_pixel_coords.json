@@ -1,0 +1,127 @@
+{
+  "kovir": {
+    "x": 880,
+    "y": 140,
+    "name": "Kovir"
+  },
+  "poviss": {
+    "x": 600,
+    "y": 240,
+    "name": "Poviss"
+  },
+  "hengfors_league": {
+    "x": 1550,
+    "y": 287,
+    "name": "Hengfors League"
+  },
+  "redania": {
+    "x": 1460,
+    "y": 576,
+    "name": "Redania"
+  },
+  "kaedwen": {
+    "x": 2340,
+    "y": 447,
+    "name": "Kaedwen"
+  },
+  "aedirn": {
+    "x": 2336,
+    "y": 1020,
+    "name": "Aedirn"
+  },
+  "dol_blathanna": {
+    "x": 2550,
+    "y": 900,
+    "name": "Dol Blathanna"
+  },
+  "temeria": {
+    "x": 1650,
+    "y": 1250,
+    "name": "Temeria"
+  },
+  "lyria_rivia": {
+    "x": 2515,
+    "y": 1300,
+    "name": "Lyria and Rivia"
+  },
+  "cidaris": {
+    "x": 1080,
+    "y": 1238,
+    "name": "Cidaris"
+  },
+  "verden": {
+    "x": 1240,
+    "y": 1570,
+    "name": "Verden"
+  },
+  "brokilon": {
+    "x": 1350,
+    "y": 1420,
+    "name": "Brokilon"
+  },
+  "cintra": {
+    "x": 1490,
+    "y": 1780,
+    "name": "Cintra"
+  },
+  "skellige": {
+    "x": 400,
+    "y": 1550,
+    "name": "Skellige"
+  },
+  "nazair": {
+    "x": 1450,
+    "y": 2220,
+    "name": "Nazair"
+  },
+  "maq_turga": {
+    "x": 1950,
+    "y": 2150,
+    "name": "Mag Turga"
+  },
+  "toussaint": {
+    "x": 2350,
+    "y": 2190,
+    "name": "Toussaint"
+  },
+  "metinna": {
+    "x": 1500,
+    "y": 2431,
+    "name": "Metinna"
+  },
+  "geso": {
+    "x": 2350,
+    "y": 2622,
+    "name": "Geso"
+  },
+  "ebbing": {
+    "x": 1650,
+    "y": 2920,
+    "name": "Ebbing"
+  },
+  "maecht": {
+    "x": 2060,
+    "y": 2880,
+    "name": "Maecht"
+  },
+  "gemmera": {
+    "x": 2150,
+    "y": 3150,
+    "name": "Gemmera"
+  },
+  "etolia": {
+    "x": 1650,
+    "y": 3450,
+    "name": "Etolia"
+  },
+  "vicovaro": {
+    "x": 2360,
+    "y": 3550,
+    "name": "Vicovaro"
+  },
+  "nilfgaard": {
+    "x": 2060,
+    "y": 3890,
+    "name": "Nilfgaard"
+  }
+}

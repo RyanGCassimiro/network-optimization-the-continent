@@ -93,34 +93,38 @@ def prim(nodes: list[str], edges: list[Edge], start: str) -> KruskalResult:
     """
     Interface compatível com MSTSolver.
 
-    Constrói um FiberGraph a partir de nodes e edges, executa prim_mst()
-    e converte o resultado para KruskalResult.
+    Implementa Prim diretamente com min-heap, sem exigir grafo conexo.
+    Grafos desconectados retornam is_connected=False (igual ao Kruskal).
     """
-    graph = FiberGraph()
-    for node in nodes:
-        graph.add_node(node)
+    # Adjacência: node -> [(weight, counter, neighbor, Edge)]
+    adj: dict[str, list] = {n: [] for n in nodes}
+    for i, edge in enumerate(edges):
+        if edge.source in adj and edge.target in adj:
+            adj[edge.source].append((edge.weight, i, edge.target, edge))
+            adj[edge.target].append((edge.weight, i, edge.source, edge))
 
-    # Mantém apenas a aresta de menor peso para cada par de nós
-    edge_lookup: dict[frozenset, Edge] = {}
-    for edge in edges:
-        key = frozenset({edge.source, edge.target})
-        if key not in edge_lookup or edge.weight < edge_lookup[key].weight:
-            edge_lookup[key] = edge
+    in_mst: set[str] = set()
+    mst_edges: list[Edge] = []
+    total_cost = 0.0
 
-    for edge in edge_lookup.values():
-        graph.add_edge(edge.source, edge.target, weight=edge.weight)
+    # (weight, counter, node, edge_or_None)
+    heap: list = [(0.0, -1, start, None)]
 
-    raw = prim_mst(graph, start_node=start)
-
-    mst_edges = [
-        edge_lookup[frozenset({u, v})]
-        for u, v, _ in raw["edges"]
-        if frozenset({u, v}) in edge_lookup
-    ]
+    while heap and len(mst_edges) < len(nodes) - 1:
+        weight, _, current, edge = heapq.heappop(heap)
+        if current in in_mst:
+            continue
+        in_mst.add(current)
+        if edge is not None:
+            mst_edges.append(edge)
+            total_cost += edge.weight
+        for w, idx, neighbor, e in adj[current]:
+            if neighbor not in in_mst:
+                heapq.heappush(heap, (w, idx, neighbor, e))
 
     return KruskalResult(
         mst_edges=mst_edges,
-        total_cost=raw["total_weight"],
+        total_cost=round(total_cost, 4),
         is_connected=len(mst_edges) == len(nodes) - 1,
         nodes_count=len(nodes),
         edges_considered=len(edges),
