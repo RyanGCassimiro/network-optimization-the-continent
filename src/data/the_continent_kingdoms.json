@@ -1,0 +1,207 @@
+{
+  "kingdoms": [
+    {
+      "name": "Kovir",
+      "capital": "Lan Exeter",
+      "connections": [
+        { "to": "Poviss", "distance": 120 },
+        { "to": "Redania", "distance": 540 },
+        { "to": "Hengfors League", "distance": 310 }
+      ]
+    },
+    {
+      "name": "Poviss",
+      "capital": "Tretogor",
+      "connections": [
+        { "to": "Kovir", "distance": 120 }
+      ]
+    },
+    {
+      "name": "Hengfors League",
+      "capital": "Hengfors",
+      "connections": [
+        { "to": "Kovir", "distance": 310 },
+        { "to": "Redania", "distance": 250 },
+        { "to": "Kaedwen", "distance": 270 }
+      ]
+    },
+    {
+      "name": "Redania",
+      "capital": "Tretogor",
+      "connections": [
+        { "to": "Kovir", "distance": 540 },
+        { "to": "Hengfors League", "distance": 250 },
+        { "to": "Kaedwen", "distance": 430 },
+        { "to": "Temeria", "distance": 300 },
+        { "to": "Aedirn", "distance": 370 }
+      ]
+    },
+    {
+      "name": "Kaedwen",
+      "capital": "Ard Carraigh",
+      "connections": [
+        { "to": "Hengfors League", "distance": 270 },
+        { "to": "Redania", "distance": 430 },
+        { "to": "Aedirn", "distance": 260 }
+      ]
+    },
+    {
+      "name": "Aedirn",
+      "capital": "Vengerberg",
+      "connections": [
+        { "to": "Kaedwen", "distance": 260 },
+        { "to": "Redania", "distance": 370 },
+        { "to": "Temeria", "distance": 220 },
+        { "to": "Lyria and Rivia", "distance": 180 }
+      ]
+    },
+    {
+      "name": "Temeria",
+      "capital": "Vizima",
+      "connections": [
+        { "to": "Redania", "distance": 300 },
+        { "to": "Aedirn", "distance": 220 },
+        { "to": "Cintra", "distance": 410 },
+        { "to": "Verden", "distance": 160 },
+        { "to": "Cidaris", "distance": 140 },
+        { "to": "Brugge", "distance": 190 }
+      ]
+    },
+    {
+      "name": "Cidaris",
+      "capital": "Cidaris",
+      "connections": [
+        { "to": "Temeria", "distance": 140 },
+        { "to": "Verden", "distance": 110 }
+      ]
+    },
+    {
+      "name": "Verden",
+      "capital": "Verden",
+      "connections": [
+        { "to": "Temeria", "distance": 160 },
+        { "to": "Cidaris", "distance": 110 },
+        { "to": "Brugge", "distance": 130 },
+        { "to": "Cintra", "distance": 240 }
+      ]
+    },
+    {
+      "name": "Brugge",
+      "capital": "Brugge",
+      "connections": [
+        { "to": "Temeria", "distance": 190 },
+        { "to": "Verden", "distance": 130 },
+        { "to": "Sodden", "distance": 150 }
+      ]
+    },
+    {
+      "name": "Cintra",
+      "capital": "Cintra",
+      "connections": [
+        { "to": "Temeria", "distance": 410 },
+        { "to": "Verden", "distance": 240 },
+        { "to": "Sodden", "distance": 200 },
+        { "to": "Nazair", "distance": 350 }
+      ]
+    },
+    {
+      "name": "Sodden",
+      "capital": "Sodden",
+      "connections": [
+        { "to": "Brugge", "distance": 150 },
+        { "to": "Cintra", "distance": 200 },
+        { "to": "Nazair", "distance": 290 },
+        { "to": "Lyria and Rivia", "distance": 260 }
+      ]
+    },
+    {
+      "name": "Lyria and Rivia",
+      "capital": "Rivia",
+      "connections": [
+        { "to": "Aedirn", "distance": 180 },
+        { "to": "Sodden", "distance": 260 },
+        { "to": "Toussaint", "distance": 330 }
+      ]
+    },
+    {
+      "name": "Toussaint",
+      "capital": "Beauclair",
+      "connections": [
+        { "to": "Lyria and Rivia", "distance": 330 },
+        { "to": "Nazair", "distance": 210 },
+        { "to": "Metinna", "distance": 260 }
+      ]
+    },
+    {
+      "name": "Nazair",
+      "capital": "Nazair",
+      "connections": [
+        { "to": "Cintra", "distance": 350 },
+        { "to": "Sodden", "distance": 290 },
+        { "to": "Toussaint", "distance": 210 },
+        { "to": "Metinna", "distance": 180 }
+      ]
+    },
+    {
+      "name": "Metinna",
+      "capital": "Metinna",
+      "connections": [
+        { "to": "Nazair", "distance": 180 },
+        { "to": "Toussaint", "distance": 260 },
+        { "to": "Maecht", "distance": 170 },
+        { "to": "Geso", "distance": 230 }
+      ]
+    },
+    {
+      "name": "Maecht",
+      "capital": "Maecht",
+      "connections": [
+        { "to": "Metinna", "distance": 170 },
+        { "to": "Gemmera", "distance": 190 },
+        { "to": "Ebbing", "distance": 150 }
+      ]
+    },
+    {
+      "name": "Geso",
+      "capital": "Yarra",
+      "connections": [
+        { "to": "Metinna", "distance": 230 },
+        { "to": "Vicovaro", "distance": 260 }
+      ]
+    },
+    {
+      "name": "Gemmera",
+      "capital": "Gemmera",
+      "connections": [
+        { "to": "Maecht", "distance": 190 },
+        { "to": "Etolia", "distance": 210 },
+        { "to": "Vicovaro", "distance": 240 }
+      ]
+    },
+    {
+      "name": "Etolia",
+      "capital": "Etolia",
+      "connections": [
+        { "to": "Gemmera", "distance": 210 },
+        { "to": "Nilfgaard", "distance": 320 }
+      ]
+    },
+    {
+      "name": "Vicovaro",
+      "capital": "Vicovaro",
+      "connections": [
+        { "to": "Geso", "distance": 260 },
+        { "to": "Gemmera", "distance": 240 },
+        { "to": "Nilfgaard", "distance": 280 }
+      ]
+    },
+    {
+      "name": "Nilfgaard",
+      "capital": "Nilfgaard",
+      "connections": [
+        { "to": "Etolia", "distance": 320 },
+        { "to": "Vicovaro", "distance": 280 }
+      ]
+    }
+  ]
+}
