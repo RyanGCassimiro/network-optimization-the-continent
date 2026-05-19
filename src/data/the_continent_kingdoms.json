@@ -1,207 +1,687 @@
 {
+  "metadata": {
+    "name": "The Continent — Fiber Optic Network",
+    "description": "Dataset de reinos do The Witcher para otimização de rede de fibra óptica via MST",
+    "source": "Mapa de The Continent by Nolan Kotulan",
+    "coordinate_unit": "km (aproximado, referência: canto noroeste do mapa)",
+    "cost_unit": "milhares de coroas (Novigrad)",
+    "terrain_multipliers": {
+      "planicie": 1.0,
+      "costeiro": 1.2,
+      "floresta": 1.4,
+      "misto": 1.6,
+      "montanha": 2.5,
+      "mar": 3.5
+    }
+  },
   "kingdoms": [
     {
+      "id": "kovir",
       "name": "Kovir",
+      "region": "norte",
+      "coords": { "x": 190, "y": 55 },
       "capital": "Lan Exeter",
-      "connections": [
-        { "to": "Poviss", "distance": 120 },
-        { "to": "Redania", "distance": 540 },
-        { "to": "Hengfors League", "distance": 310 }
-      ]
+      "population_estimate": 320000,
+      "description": "Reino rico ao norte, famoso pelo comércio marítimo"
     },
     {
+      "id": "poviss",
       "name": "Poviss",
-      "capital": "Tretogor",
-      "connections": [
-        { "to": "Kovir", "distance": 120 }
-      ]
+      "region": "norte",
+      "coords": { "x": 100, "y": 105 },
+      "capital": "Poviss",
+      "population_estimate": 210000,
+      "description": "Reino costeiro aliado a Kovir"
     },
     {
+      "id": "hengfors_league",
       "name": "Hengfors League",
+      "region": "norte",
+      "coords": { "x": 430, "y": 95 },
       "capital": "Hengfors",
-      "connections": [
-        { "to": "Kovir", "distance": 310 },
-        { "to": "Redania", "distance": 250 },
-        { "to": "Kaedwen", "distance": 270 }
-      ]
+      "population_estimate": 280000,
+      "description": "Liga de cidades-estado ao nordeste"
     },
     {
-      "name": "Redania",
-      "capital": "Tretogor",
-      "connections": [
-        { "to": "Kovir", "distance": 540 },
-        { "to": "Hengfors League", "distance": 250 },
-        { "to": "Kaedwen", "distance": 430 },
-        { "to": "Temeria", "distance": 300 },
-        { "to": "Aedirn", "distance": 370 }
-      ]
-    },
-    {
+      "id": "kaedwen",
       "name": "Kaedwen",
+      "region": "norte",
+      "coords": { "x": 600, "y": 145 },
       "capital": "Ard Carraigh",
-      "connections": [
-        { "to": "Hengfors League", "distance": 270 },
-        { "to": "Redania", "distance": 430 },
-        { "to": "Aedirn", "distance": 260 }
-      ]
+      "population_estimate": 490000,
+      "description": "Maior reino do norte, vasto e frio"
     },
     {
+      "id": "redania",
+      "name": "Redania",
+      "region": "norte",
+      "coords": { "x": 295, "y": 205 },
+      "capital": "Oxenfurt / Tretogor",
+      "population_estimate": 680000,
+      "description": "Reino poderoso, sede da Universidade de Oxenfurt"
+    },
+    {
+      "id": "aedirn",
       "name": "Aedirn",
+      "region": "central",
+      "coords": { "x": 600, "y": 290 },
       "capital": "Vengerberg",
-      "connections": [
-        { "to": "Kaedwen", "distance": 260 },
-        { "to": "Redania", "distance": 370 },
-        { "to": "Temeria", "distance": 220 },
-        { "to": "Lyria and Rivia", "distance": 180 }
-      ]
+      "population_estimate": 420000,
+      "description": "Reino montanhoso a leste, próximo a Dol Blathanna"
     },
     {
-      "name": "Temeria",
-      "capital": "Vizima",
-      "connections": [
-        { "to": "Redania", "distance": 300 },
-        { "to": "Aedirn", "distance": 220 },
-        { "to": "Cintra", "distance": 410 },
-        { "to": "Verden", "distance": 160 },
-        { "to": "Cidaris", "distance": 140 },
-        { "to": "Brugge", "distance": 190 }
-      ]
+      "id": "dol_blathanna",
+      "name": "Dol Blathanna",
+      "region": "central",
+      "coords": { "x": 660, "y": 235 },
+      "capital": "Dol Blathanna",
+      "population_estimate": 95000,
+      "description": "Vale dos Elfos, encravado entre Kaedwen e Aedirn"
     },
     {
-      "name": "Cidaris",
-      "capital": "Cidaris",
-      "connections": [
-        { "to": "Temeria", "distance": 140 },
-        { "to": "Verden", "distance": 110 }
-      ]
-    },
-    {
-      "name": "Verden",
-      "capital": "Verden",
-      "connections": [
-        { "to": "Temeria", "distance": 160 },
-        { "to": "Cidaris", "distance": 110 },
-        { "to": "Brugge", "distance": 130 },
-        { "to": "Cintra", "distance": 240 }
-      ]
-    },
-    {
-      "name": "Brugge",
-      "capital": "Brugge",
-      "connections": [
-        { "to": "Temeria", "distance": 190 },
-        { "to": "Verden", "distance": 130 },
-        { "to": "Sodden", "distance": 150 }
-      ]
-    },
-    {
-      "name": "Cintra",
-      "capital": "Cintra",
-      "connections": [
-        { "to": "Temeria", "distance": 410 },
-        { "to": "Verden", "distance": 240 },
-        { "to": "Sodden", "distance": 200 },
-        { "to": "Nazair", "distance": 350 }
-      ]
-    },
-    {
-      "name": "Sodden",
-      "capital": "Sodden",
-      "connections": [
-        { "to": "Brugge", "distance": 150 },
-        { "to": "Cintra", "distance": 200 },
-        { "to": "Nazair", "distance": 290 },
-        { "to": "Lyria and Rivia", "distance": 260 }
-      ]
-    },
-    {
-      "name": "Lyria and Rivia",
+      "id": "lyria_rivia",
+      "name": "Lyria e Rivia",
+      "region": "central",
+      "coords": { "x": 670, "y": 345 },
       "capital": "Rivia",
-      "connections": [
-        { "to": "Aedirn", "distance": 180 },
-        { "to": "Sodden", "distance": 260 },
-        { "to": "Toussaint", "distance": 330 }
-      ]
+      "population_estimate": 310000,
+      "description": "Dois reinos unidos, lar do Witcher Geralt"
     },
     {
+      "id": "temeria",
+      "name": "Temeria",
+      "region": "central",
+      "coords": { "x": 360, "y": 330 },
+      "capital": "Vizima",
+      "population_estimate": 750000,
+      "description": "Reino central e influente, governado pelos Foltest"
+    },
+    {
+      "id": "skellige",
+      "name": "Skellige",
+      "region": "norte",
+      "coords": { "x": 65, "y": 390 },
+      "capital": "Kaer Trolde",
+      "population_estimate": 130000,
+      "description": "Arquipélago de guerreiros nórdicos no oceano"
+    },
+    {
+      "id": "verden",
+      "name": "Verden",
+      "region": "central",
+      "coords": { "x": 235, "y": 430 },
+      "capital": "Verden",
+      "population_estimate": 180000,
+      "description": "Pequeno reino entre Temeria e Cintra"
+    },
+    {
+      "id": "brokilon",
+      "name": "Brokilon",
+      "region": "central",
+      "coords": { "x": 295, "y": 460 },
+      "capital": "Brokilon (Floresta)",
+      "population_estimate": 40000,
+      "description": "Floresta ancestral das Dríades, intransponível para humanos"
+    },
+    {
+      "id": "cintra",
+      "name": "Cintra",
+      "region": "central",
+      "coords": { "x": 345, "y": 510 },
+      "capital": "Cintra",
+      "population_estimate": 390000,
+      "description": "Reino de Calanthe, lar da Princesa Ciri"
+    },
+    {
+      "id": "toussaint",
       "name": "Toussaint",
+      "region": "sul",
+      "coords": { "x": 660, "y": 490 },
       "capital": "Beauclair",
-      "connections": [
-        { "to": "Lyria and Rivia", "distance": 330 },
-        { "to": "Nazair", "distance": 210 },
-        { "to": "Metinna", "distance": 260 }
-      ]
+      "population_estimate": 220000,
+      "description": "Ducado vassalo de Nilfgaard, famoso pelo vinho"
     },
     {
+      "id": "nazair",
       "name": "Nazair",
+      "region": "sul",
+      "coords": { "x": 270, "y": 580 },
       "capital": "Nazair",
-      "connections": [
-        { "to": "Cintra", "distance": 350 },
-        { "to": "Sodden", "distance": 290 },
-        { "to": "Toussaint", "distance": 210 },
-        { "to": "Metinna", "distance": 180 }
-      ]
+      "population_estimate": 195000,
+      "description": "Reino ao sul de Cintra, território disputado"
     },
     {
+      "id": "maq_turga",
+      "name": "Maq Turga",
+      "region": "sul",
+      "coords": { "x": 450, "y": 590 },
+      "capital": "Maq Turga",
+      "population_estimate": 170000,
+      "description": "Reino central-sul com terreno acidentado"
+    },
+    {
+      "id": "metinna",
       "name": "Metinna",
+      "region": "sul",
+      "coords": { "x": 295, "y": 690 },
       "capital": "Metinna",
-      "connections": [
-        { "to": "Nazair", "distance": 180 },
-        { "to": "Toussaint", "distance": 260 },
-        { "to": "Maecht", "distance": 170 },
-        { "to": "Geso", "distance": 230 }
-      ]
+      "population_estimate": 240000,
+      "description": "Reino ao sul de Nazair, domínio nilfgaardiano"
     },
     {
-      "name": "Maecht",
-      "capital": "Maecht",
-      "connections": [
-        { "to": "Metinna", "distance": 170 },
-        { "to": "Gemmera", "distance": 190 },
-        { "to": "Ebbing", "distance": 150 }
-      ]
-    },
-    {
+      "id": "geso",
       "name": "Geso",
-      "capital": "Yarra",
-      "connections": [
-        { "to": "Metinna", "distance": 230 },
-        { "to": "Vicovaro", "distance": 260 }
-      ]
+      "region": "sul",
+      "coords": { "x": 590, "y": 650 },
+      "capital": "Geso",
+      "population_estimate": 155000,
+      "description": "Reino a sudeste, próximo ao Deserto de Korath"
     },
     {
+      "id": "ebbing",
+      "name": "Ebbing",
+      "region": "sul",
+      "coords": { "x": 330, "y": 790 },
+      "capital": "Salm",
+      "population_estimate": 200000,
+      "description": "Reino ao sul, entre Metinna e Gemmera"
+    },
+    {
+      "id": "maecht",
+      "name": "Maecht",
+      "region": "sul",
+      "coords": { "x": 510, "y": 755 },
+      "capital": "Maecht",
+      "population_estimate": 175000,
+      "description": "Reino entre Geso e Ebbing"
+    },
+    {
+      "id": "gemmera",
       "name": "Gemmera",
+      "region": "sul",
+      "coords": { "x": 450, "y": 860 },
       "capital": "Gemmera",
-      "connections": [
-        { "to": "Maecht", "distance": 190 },
-        { "to": "Etolia", "distance": 210 },
-        { "to": "Vicovaro", "distance": 240 }
-      ]
+      "population_estimate": 190000,
+      "description": "Reino ao sul de Ebbing e Maecht"
     },
     {
+      "id": "etolia",
       "name": "Etolia",
+      "region": "sul",
+      "coords": { "x": 340, "y": 930 },
       "capital": "Etolia",
-      "connections": [
-        { "to": "Gemmera", "distance": 210 },
-        { "to": "Nilfgaard", "distance": 320 }
-      ]
+      "population_estimate": 145000,
+      "description": "Reino meridional, perto da fronteira nilfgaardiana"
     },
     {
+      "id": "vicovaro",
       "name": "Vicovaro",
+      "region": "sul",
+      "coords": { "x": 605, "y": 890 },
       "capital": "Vicovaro",
-      "connections": [
-        { "to": "Geso", "distance": 260 },
-        { "to": "Gemmera", "distance": 240 },
-        { "to": "Nilfgaard", "distance": 280 }
-      ]
+      "population_estimate": 160000,
+      "description": "Província nilfgaardiana ao sudeste"
     },
     {
+      "id": "nilfgaard",
       "name": "Nilfgaard",
-      "capital": "Nilfgaard",
-      "connections": [
-        { "to": "Etolia", "distance": 320 },
-        { "to": "Vicovaro", "distance": 280 }
-      ]
+      "region": "imperio_sul",
+      "coords": { "x": 430, "y": 1010 },
+      "capital": "Nilfgaard (Cidade Dourada)",
+      "population_estimate": 2100000,
+      "description": "Império do Sul, a maior potência do continente"
+    }
+  ],
+  "connections": [
+    {
+      "id": "c01",
+      "source": "kovir",
+      "target": "poviss",
+      "distance_km": 115,
+      "terrain": "costeiro",
+      "terrain_multiplier": 1.2,
+      "cost": 138,
+      "notes": "Rota costeira entre os dois reinos do norte"
+    },
+    {
+      "id": "c02",
+      "source": "kovir",
+      "target": "hengfors_league",
+      "distance_km": 265,
+      "terrain": "montanha",
+      "terrain_multiplier": 2.5,
+      "cost": 663,
+      "notes": "Atravessa as Montanhas do Dragão"
+    },
+    {
+      "id": "c03",
+      "source": "kovir",
+      "target": "redania",
+      "distance_km": 235,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 235,
+      "notes": "Rota comercial direta ao sul"
+    },
+    {
+      "id": "c04",
+      "source": "poviss",
+      "target": "redania",
+      "distance_km": 210,
+      "terrain": "costeiro",
+      "terrain_multiplier": 1.2,
+      "cost": 252,
+      "notes": "Segue a costa do Mar do Norte"
+    },
+    {
+      "id": "c05",
+      "source": "hengfors_league",
+      "target": "kaedwen",
+      "distance_km": 190,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 190,
+      "notes": "Planície aberta entre as cidades-estado e Kaedwen"
+    },
+    {
+      "id": "c06",
+      "source": "hengfors_league",
+      "target": "redania",
+      "distance_km": 170,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 170,
+      "notes": "Rota plana e bem estabelecida"
+    },
+    {
+      "id": "c07",
+      "source": "kaedwen",
+      "target": "redania",
+      "distance_km": 290,
+      "terrain": "floresta",
+      "terrain_multiplier": 1.4,
+      "cost": 406,
+      "notes": "Atravessa florestas densas ao sul de Kaedwen"
+    },
+    {
+      "id": "c08",
+      "source": "kaedwen",
+      "target": "dol_blathanna",
+      "distance_km": 155,
+      "terrain": "floresta",
+      "terrain_multiplier": 1.4,
+      "cost": 217,
+      "notes": "Fronteira com o Vale dos Elfos"
+    },
+    {
+      "id": "c09",
+      "source": "kaedwen",
+      "target": "aedirn",
+      "distance_km": 200,
+      "terrain": "montanha",
+      "terrain_multiplier": 2.5,
+      "cost": 500,
+      "notes": "Passagem pelos Picos Azuis"
+    },
+    {
+      "id": "c10",
+      "source": "redania",
+      "target": "temeria",
+      "distance_km": 175,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 175,
+      "notes": "Rota principal entre os dois maiores reinos do norte"
+    },
+    {
+      "id": "c11",
+      "source": "dol_blathanna",
+      "target": "aedirn",
+      "distance_km": 90,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 90,
+      "notes": "Vale fértil, terreno favorável"
+    },
+    {
+      "id": "c12",
+      "source": "aedirn",
+      "target": "lyria_rivia",
+      "distance_km": 130,
+      "terrain": "montanha",
+      "terrain_multiplier": 2.5,
+      "cost": 325,
+      "notes": "Montanhas entre Vengerberg e Rivia"
+    },
+    {
+      "id": "c13",
+      "source": "aedirn",
+      "target": "temeria",
+      "distance_km": 245,
+      "terrain": "misto",
+      "terrain_multiplier": 1.6,
+      "cost": 392,
+      "notes": "Rota mista com trechos montanhosos"
+    },
+    {
+      "id": "c14",
+      "source": "lyria_rivia",
+      "target": "temeria",
+      "distance_km": 310,
+      "terrain": "misto",
+      "terrain_multiplier": 1.6,
+      "cost": 496,
+      "notes": "Rota longa cruzando o interior"
+    },
+    {
+      "id": "c15",
+      "source": "lyria_rivia",
+      "target": "toussaint",
+      "distance_km": 280,
+      "terrain": "montanha",
+      "terrain_multiplier": 2.5,
+      "cost": 700,
+      "notes": "Atravessa as Montanhas Amell"
+    },
+    {
+      "id": "c16",
+      "source": "temeria",
+      "target": "verden",
+      "distance_km": 160,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 160,
+      "notes": "Corredor plano ao longo do Rio Yaruga"
+    },
+    {
+      "id": "c17",
+      "source": "temeria",
+      "target": "brokilon",
+      "distance_km": 130,
+      "terrain": "floresta",
+      "terrain_multiplier": 1.4,
+      "cost": 182,
+      "notes": "Borda da floresta das Dríades — acesso restrito"
+    },
+    {
+      "id": "c18",
+      "source": "temeria",
+      "target": "cintra",
+      "distance_km": 230,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 230,
+      "notes": "Estrada principal ao sul de Vizima"
+    },
+    {
+      "id": "c19",
+      "source": "verden",
+      "target": "cintra",
+      "distance_km": 145,
+      "terrain": "costeiro",
+      "terrain_multiplier": 1.2,
+      "cost": 174,
+      "notes": "Rota costeira pelo Mar do Norte"
+    },
+    {
+      "id": "c20",
+      "source": "brokilon",
+      "target": "cintra",
+      "distance_km": 110,
+      "terrain": "floresta",
+      "terrain_multiplier": 1.4,
+      "cost": 154,
+      "notes": "Atravessa a floresta de Brokilon ao sul"
+    },
+    {
+      "id": "c21",
+      "source": "skellige",
+      "target": "cintra",
+      "distance_km": 420,
+      "terrain": "mar",
+      "terrain_multiplier": 3.5,
+      "cost": 1470,
+      "notes": "Cabo submarino pelo Oceano — altíssimo custo"
+    },
+    {
+      "id": "c22",
+      "source": "skellige",
+      "target": "verden",
+      "distance_km": 380,
+      "terrain": "mar",
+      "terrain_multiplier": 3.5,
+      "cost": 1330,
+      "notes": "Alternativa submarina para Skellige"
+    },
+    {
+      "id": "c23",
+      "source": "cintra",
+      "target": "nazair",
+      "distance_km": 185,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 185,
+      "notes": "Planície ao sul de Cintra"
+    },
+    {
+      "id": "c24",
+      "source": "cintra",
+      "target": "maq_turga",
+      "distance_km": 270,
+      "terrain": "misto",
+      "terrain_multiplier": 1.6,
+      "cost": 432,
+      "notes": "Rota mista pelo interior sul"
+    },
+    {
+      "id": "c25",
+      "source": "cintra",
+      "target": "toussaint",
+      "distance_km": 370,
+      "terrain": "montanha",
+      "terrain_multiplier": 2.5,
+      "cost": 925,
+      "notes": "Montanhas Amell — terreno muito difícil"
+    },
+    {
+      "id": "c26",
+      "source": "toussaint",
+      "target": "maq_turga",
+      "distance_km": 230,
+      "terrain": "montanha",
+      "terrain_multiplier": 2.5,
+      "cost": 575,
+      "notes": "Descida das montanhas ao planalto central"
+    },
+    {
+      "id": "c27",
+      "source": "toussaint",
+      "target": "geso",
+      "distance_km": 200,
+      "terrain": "misto",
+      "terrain_multiplier": 1.6,
+      "cost": 320,
+      "notes": "Rota pelo interior leste"
+    },
+    {
+      "id": "c28",
+      "source": "nazair",
+      "target": "metinna",
+      "distance_km": 195,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 195,
+      "notes": "Corredor plano entre os dois reinos do sul"
+    },
+    {
+      "id": "c29",
+      "source": "nazair",
+      "target": "maq_turga",
+      "distance_km": 215,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 215,
+      "notes": "Rota direta pelo interior"
+    },
+    {
+      "id": "c30",
+      "source": "maq_turga",
+      "target": "metinna",
+      "distance_km": 235,
+      "terrain": "misto",
+      "terrain_multiplier": 1.6,
+      "cost": 376,
+      "notes": "Terreno variado com colinas"
+    },
+    {
+      "id": "c31",
+      "source": "maq_turga",
+      "target": "geso",
+      "distance_km": 195,
+      "terrain": "misto",
+      "terrain_multiplier": 1.6,
+      "cost": 312,
+      "notes": "Conexão leste no planalto central"
+    },
+    {
+      "id": "c32",
+      "source": "maq_turga",
+      "target": "maecht",
+      "distance_km": 220,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 220,
+      "notes": "Rota plana ao sul"
+    },
+    {
+      "id": "c33",
+      "source": "metinna",
+      "target": "ebbing",
+      "distance_km": 200,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 200,
+      "notes": "Planície meridional"
+    },
+    {
+      "id": "c34",
+      "source": "metinna",
+      "target": "gemmera",
+      "distance_km": 245,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 245,
+      "notes": "Rota direta entre províncias nilfgaardianas"
+    },
+    {
+      "id": "c35",
+      "source": "geso",
+      "target": "maecht",
+      "distance_km": 165,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 165,
+      "notes": "Rota curta e plana"
+    },
+    {
+      "id": "c36",
+      "source": "geso",
+      "target": "vicovaro",
+      "distance_km": 285,
+      "terrain": "montanha",
+      "terrain_multiplier": 2.5,
+      "cost": 713,
+      "notes": "Borda do Deserto de Korath — terreno árido e montanhoso"
+    },
+    {
+      "id": "c37",
+      "source": "ebbing",
+      "target": "maecht",
+      "distance_km": 200,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 200,
+      "notes": "Planalto entre os dois reinos"
+    },
+    {
+      "id": "c38",
+      "source": "ebbing",
+      "target": "gemmera",
+      "distance_km": 175,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 175,
+      "notes": "Rota plana e direta"
+    },
+    {
+      "id": "c39",
+      "source": "ebbing",
+      "target": "etolia",
+      "distance_km": 185,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 185,
+      "notes": "Corredor sul rumo ao Império"
+    },
+    {
+      "id": "c40",
+      "source": "maecht",
+      "target": "gemmera",
+      "distance_km": 180,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 180,
+      "notes": "Planície central do sul"
+    },
+    {
+      "id": "c41",
+      "source": "gemmera",
+      "target": "etolia",
+      "distance_km": 150,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 150,
+      "notes": "Conexão curta ao sudoeste"
+    },
+    {
+      "id": "c42",
+      "source": "gemmera",
+      "target": "vicovaro",
+      "distance_km": 205,
+      "terrain": "misto",
+      "terrain_multiplier": 1.6,
+      "cost": 328,
+      "notes": "Rota mista com trechos serranos"
+    },
+    {
+      "id": "c43",
+      "source": "etolia",
+      "target": "nilfgaard",
+      "distance_km": 245,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 245,
+      "notes": "Estrada imperial rumo à Cidade Dourada"
+    },
+    {
+      "id": "c44",
+      "source": "vicovaro",
+      "target": "nilfgaard",
+      "distance_km": 260,
+      "terrain": "misto",
+      "terrain_multiplier": 1.6,
+      "cost": 416,
+      "notes": "Rota leste até a capital do Império"
+    },
+    {
+      "id": "c45",
+      "source": "gemmera",
+      "target": "nilfgaard",
+      "distance_km": 230,
+      "terrain": "planicie",
+      "terrain_multiplier": 1.0,
+      "cost": 230,
+      "notes": "Acesso central ao Império"
     }
   ]
 }
