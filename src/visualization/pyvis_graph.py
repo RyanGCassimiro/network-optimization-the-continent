@@ -20,6 +20,12 @@ COLOR_START_NODE   = "#E74C3C"       # Vermelho — nó inicial
 COLOR_DEFAULT_EDGE = "#AAAAAA"       # Cinza — aresta normal
 COLOR_MST_EDGE     = "#F39C12"       # Laranja — aresta da MST
 
+NODE_SIZE_START   = 22
+NODE_SIZE_MST     = 18
+NODE_SIZE_DEFAULT = 14
+EDGE_WIDTH_MST    = 4
+EDGE_WIDTH_DEFAULT = 1
+
 
 def build_network(
     graph: FiberGraph,
@@ -94,17 +100,17 @@ def build_network(
         if node == start_node:
             color = COLOR_START_NODE
             shape = "star"
-            size = 22
+            size = NODE_SIZE_START
             title = f"<b>⭐ {node}</b> (nó inicial)<br>" + _format_attrs(attrs)
         elif node in mst_node_set:
             color = COLOR_MST_NODE
             shape = "dot"
-            size = 18
+            size = NODE_SIZE_MST
             title = f"<b>🟢 {node}</b><br>" + _format_attrs(attrs)
         else:
             color = COLOR_DEFAULT_NODE
             shape = "dot"
-            size = 14
+            size = NODE_SIZE_DEFAULT
             title = f"<b>{node}</b><br>" + _format_attrs(attrs)
 
         net.add_node(
@@ -125,13 +131,13 @@ def build_network(
 
         if is_mst:
             color = COLOR_MST_EDGE
-            width = 4
+            width = EDGE_WIDTH_MST
             dashes = False
             label = f"{weight:.1f} km"
             title = f"<b>MST ✔</b><br>{u} ↔ {v}<br>Custo: {weight:.2f}"
         else:
             color = COLOR_DEFAULT_EDGE
-            width = 1
+            width = EDGE_WIDTH_DEFAULT
             dashes = True
             label = f"{weight:.1f}"
             title = f"{u} ↔ {v}<br>Custo: {weight:.2f}"

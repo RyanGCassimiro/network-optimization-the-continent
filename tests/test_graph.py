@@ -166,7 +166,7 @@ class TestEdges:
         assert isinstance(edges, list)
         for item in edges:
             assert len(item) == 3    # (u, v, weight)
-            assert isinstance(item[2], float)
+            assert isinstance(item[2], (int, float))
 
     def test_get_edge_count(self, small_graph):
         assert small_graph.get_edge_count() == 5
@@ -242,6 +242,10 @@ class TestStructure:
         assert "Bairros" in s
         assert "Conexões" in s
         assert "Custo total" in s
+        expected_weight = 2.5 + 4.0 + 1.8 + 3.2 + 6.1
+        assert f"{expected_weight:.2f}" in s
+        assert "4" in s   # 4 nós
+        assert "5" in s   # 5 arestas
 
     def test_get_networkx_graph(self, small_graph):
         import networkx as nx

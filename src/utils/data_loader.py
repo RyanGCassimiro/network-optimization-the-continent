@@ -42,7 +42,7 @@ def metadata(path: str | Path = DEFAULT_DATASET) -> dict:
 # ------------------------------------------------------------------
 
 _REQUIRED_KINGDOM_FIELDS = {"id", "name", "region", "coords"}
-_REQUIRED_CONNECTION_FIELDS = {"id", "source", "target", "distance_km", "terrain", "cost"}
+_REQUIRED_CONNECTION_FIELDS = {"id", "source", "target", "distance_km", "terrain", "cost", "terrain_multiplier"}
 
 
 def _validate(data: dict, path: Path) -> None:
