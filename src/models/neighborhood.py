@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field
-from typing import Optional
+from dataclasses import dataclass
 
 
 @dataclass
@@ -25,7 +24,7 @@ class Neighborhood:
     description: str = ""
 
     @classmethod
-    def from_dict(cls, data: dict) -> "Neighborhood":
+    def from_dict(cls: type["Neighborhood"], data: dict) -> "Neighborhood":
         return cls(
             id=data["id"],
             name=data["name"],

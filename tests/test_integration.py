@@ -1,10 +1,15 @@
 """
-Testes unitários dos algoritmos MST.
+Testes dos algoritmos MST, data_loader, metrics e pipeline de integração.
 Responsável: Wanessa
 """
+import json
 import pytest
+from pathlib import Path
 
 from src.algorithms.kruskal import Edge, KruskalResult, UnionFind, kruskal
+from src.models.neighborhood import Coords, Neighborhood
+
+DATASET = Path(__file__).parent.parent / "src" / "data" / "the_continent_kingdoms.json"
 
 
 
@@ -164,10 +169,11 @@ class TestKruskalBasico:
 # Kruskal — propriedades da MST
 
 class TestKruskalPropriedadesMST:
-    def test_mst_tem_n_menos_1_arestas(self, triangle, square):
-        for nodes, edges in [triangle, square]:
-            result = kruskal(nodes, edges)
-            assert result.edges_count == len(nodes) - 1
+    @pytest.mark.parametrize("fixture_name", ["triangle", "square"])
+    def test_mst_tem_n_menos_1_arestas(self, request, fixture_name):
+        nodes, edges = request.getfixturevalue(fixture_name)
+        result = kruskal(nodes, edges)
+        assert result.edges_count == len(nodes) - 1
 
     def test_mst_sem_ciclos(self, square):
         nodes, edges = square
@@ -252,3 +258,253 @@ class TestKruskalResult:
         result = kruskal(nodes, edges)
         r = repr(result)
         assert "conectado" in r or "desconectado" in r
+
+
+# ========================================================================
+# DataLoader
+# ========================================================================
+
+class TestDataLoader:
+    def test_load_dataset_real_retorna_listas(self):
+        from src.utils.data_loader import load
+        neighborhoods, connections = load(DATASET)
+        assert isinstance(neighborhoods, list)
+        assert isinstance(connections, list)
+        assert len(neighborhoods) > 0
+        assert len(connections) > 0
+
+    def test_load_neighborhoods_sao_neighborhood(self):
+        from src.utils.data_loader import load
+        from src.models.neighborhood import Neighborhood
+        neighborhoods, _ = load(DATASET)
+        assert all(isinstance(n, Neighborhood) for n in neighborhoods)
+
+    def test_load_connections_tem_campos_obrigatorios(self):
+        from src.utils.data_loader import load
+        _, connections = load(DATASET)
+        required = {"id", "source", "target", "distance_km", "terrain", "cost", "terrain_multiplier"}
+        for c in connections:
+            assert required <= c.keys(), f"Conexão {c.get('id')} faltam campos: {required - c.keys()}"
+
+    def test_load_arquivo_inexistente_levanta_filenotfounderror(self, tmp_path):
+        from src.utils.data_loader import load
+        with pytest.raises(FileNotFoundError):
+            load(tmp_path / "nao_existe.json")
+
+    def test_load_json_invalido_levanta_valueerror(self, tmp_path):
+        from src.utils.data_loader import load
+        bad = tmp_path / "bad.json"
+        bad.write_text("{ isso nao é json }", encoding="utf-8")
+        with pytest.raises(ValueError, match="JSON inválido"):
+            load(bad)
+
+    def test_load_campo_kingdoms_ausente_levanta_valueerror(self, tmp_path):
+        from src.utils.data_loader import load
+        bad = tmp_path / "bad.json"
+        bad.write_text(json.dumps({"connections": []}), encoding="utf-8")
+        with pytest.raises(ValueError, match="kingdoms"):
+            load(bad)
+
+    def test_load_campo_connections_ausente_levanta_valueerror(self, tmp_path):
+        from src.utils.data_loader import load
+        bad = tmp_path / "bad.json"
+        bad.write_text(json.dumps({"kingdoms": []}), encoding="utf-8")
+        with pytest.raises(ValueError, match="connections"):
+            load(bad)
+
+    def test_load_reino_sem_campo_obrigatorio_levanta_valueerror(self, tmp_path):
+        from src.utils.data_loader import load
+        bad = tmp_path / "bad.json"
+        data = {
+            "kingdoms": [{"id": "x", "name": "X"}],  # faltam region e coords
+            "connections": [],
+        }
+        bad.write_text(json.dumps(data), encoding="utf-8")
+        with pytest.raises(ValueError):
+            load(bad)
+
+    def test_load_id_duplicado_levanta_valueerror(self, tmp_path):
+        from src.utils.data_loader import load
+        bad = tmp_path / "bad.json"
+        reino = {"id": "dup", "name": "X", "region": "norte", "coords": {"x": 0, "y": 0}}
+        data = {"kingdoms": [reino, reino], "connections": []}
+        bad.write_text(json.dumps(data), encoding="utf-8")
+        with pytest.raises(ValueError, match="duplicado"):
+            load(bad)
+
+    def test_load_conexao_com_source_inexistente_levanta_valueerror(self, tmp_path):
+        from src.utils.data_loader import load
+        bad = tmp_path / "bad.json"
+        data = {
+            "kingdoms": [{"id": "A", "name": "A", "region": "norte", "coords": {"x": 0, "y": 0}}],
+            "connections": [{"id": "c1", "source": "INEXISTENTE", "target": "A",
+                             "distance_km": 1, "terrain": "planicie", "cost": 1, "terrain_multiplier": 1.0}],
+        }
+        bad.write_text(json.dumps(data), encoding="utf-8")
+        with pytest.raises(ValueError):
+            load(bad)
+
+    def test_metadata_retorna_dict(self):
+        from src.utils.data_loader import metadata
+        meta = metadata(DATASET)
+        assert isinstance(meta, dict)
+        assert "name" in meta
+
+
+# ========================================================================
+# Metrics
+# ========================================================================
+
+@pytest.fixture
+def solver_result_real():
+    """Carrega dataset real e executa Kruskal — base para testes de métricas."""
+    from src.utils.data_loader import load
+    from src.algorithms.mst_solver import MSTSolver
+    neighborhoods, connections = load(DATASET)
+    solver = MSTSolver(neighborhoods, connections)
+    return solver, solver.solve(algorithm="kruskal")
+
+
+class TestMetrics:
+    def test_summary_retorna_dataframe(self, solver_result_real):
+        from src.visualization.metrics import summary
+        import pandas as pd
+        solver, result = solver_result_real
+        df = summary(result, solver)
+        assert isinstance(df, pd.DataFrame)
+        assert list(df.columns) == ["Métrica", "Valor"]
+
+    def test_summary_contem_algoritmo(self, solver_result_real):
+        from src.visualization.metrics import summary
+        solver, result = solver_result_real
+        df = summary(result, solver)
+        assert "Kruskal" in df["Valor"].values
+
+    def test_edges_table_retorna_dataframe(self, solver_result_real):
+        from src.visualization.metrics import edges_table
+        import pandas as pd
+        solver, result = solver_result_real
+        df = edges_table(result, solver)
+        assert isinstance(df, pd.DataFrame)
+        assert "Custo (k coroas)" in df.columns
+
+    def test_edges_table_custo_por_km_sem_divisao_por_zero(self, solver_result_real):
+        from src.visualization.metrics import edges_table
+        solver, result = solver_result_real
+        df = edges_table(result, solver)
+        assert df["Custo/km"].notna().all()
+        assert (df["Custo/km"] >= 0).all()
+
+    def test_cost_by_terrain_retorna_dataframe(self, solver_result_real):
+        from src.visualization.metrics import cost_by_terrain
+        import pandas as pd
+        solver, result = solver_result_real
+        df = cost_by_terrain(result)
+        assert isinstance(df, pd.DataFrame)
+        assert "Terreno" in df.columns
+        assert "% do custo MST" in df.columns
+
+    def test_cost_by_terrain_percentual_valido(self, solver_result_real):
+        from src.visualization.metrics import cost_by_terrain
+        solver, result = solver_result_real
+        df = cost_by_terrain(result)
+        assert (df["% do custo MST"] >= 0).all()
+        assert (df["% do custo MST"] <= 100).all()
+
+    def test_node_degree_retorna_dataframe(self, solver_result_real):
+        from src.visualization.metrics import node_degree
+        import pandas as pd
+        solver, result = solver_result_real
+        df = node_degree(result, solver)
+        assert isinstance(df, pd.DataFrame)
+        assert "Conexões na MST" in df.columns
+        assert "Hub crítico" in df.columns
+
+    def test_regional_cost_retorna_dataframe(self, solver_result_real):
+        from src.visualization.metrics import regional_cost
+        import pandas as pd
+        solver, result = solver_result_real
+        df = regional_cost(result, solver)
+        assert isinstance(df, pd.DataFrame)
+        assert "% do custo MST" in df.columns
+
+    def test_regional_cost_percentual_valido(self, solver_result_real):
+        from src.visualization.metrics import regional_cost
+        solver, result = solver_result_real
+        df = regional_cost(result, solver)
+        assert (df["% do custo MST"] >= 0).all()
+        assert (df["% do custo MST"] <= 100).all()
+
+    def test_top_edges_retorna_mais_caras_e_baratas(self, solver_result_real):
+        from src.visualization.metrics import top_edges
+        solver, result = solver_result_real
+        tops = top_edges(result, solver, n=3)
+        assert "mais_caras" in tops and "mais_baratas" in tops
+        assert len(tops["mais_caras"]) <= 3
+        assert len(tops["mais_baratas"]) <= 3
+
+    def test_compare_algorithms_retorna_dataframe_com_prim(self, solver_result_real):
+        from src.visualization.metrics import compare_algorithms
+        import pandas as pd
+        solver, _ = solver_result_real
+        df = compare_algorithms(solver)
+        assert isinstance(df, pd.DataFrame)
+        algos = df["Algoritmo"].str.lower().tolist()
+        assert "kruskal" in algos
+        assert "prim" in algos
+
+
+# ========================================================================
+# Pipeline completo (integração real)
+# ========================================================================
+
+class TestPipelineCompleto:
+    def test_load_e_solve_kruskal(self):
+        from src.utils.data_loader import load
+        from src.algorithms.mst_solver import MSTSolver
+        neighborhoods, connections = load(DATASET)
+        solver = MSTSolver(neighborhoods, connections)
+        result = solver.solve(algorithm="kruskal")
+        assert result.is_connected is True
+        assert result.total_cost > 0
+        assert result.edges_in_mst == result.nodes_count - 1
+
+    def test_load_e_solve_prim(self):
+        from src.utils.data_loader import load
+        from src.algorithms.mst_solver import MSTSolver
+        neighborhoods, connections = load(DATASET)
+        solver = MSTSolver(neighborhoods, connections)
+        result = solver.solve(algorithm="prim")
+        assert result.is_connected is True
+        assert result.total_cost > 0
+        assert result.edges_in_mst == result.nodes_count - 1
+
+    def test_kruskal_e_prim_mesmo_custo_dataset_real(self):
+        from src.utils.data_loader import load
+        from src.algorithms.mst_solver import MSTSolver
+        neighborhoods, connections = load(DATASET)
+        solver = MSTSolver(neighborhoods, connections)
+        results = solver.compare()
+        assert results["kruskal"].total_cost == pytest.approx(results["prim"].total_cost, rel=1e-3)
+
+    def test_pipeline_completo_load_solve_metrics(self):
+        from src.utils.data_loader import load
+        from src.algorithms.mst_solver import MSTSolver
+        from src.visualization import metrics
+        neighborhoods, connections = load(DATASET)
+        solver = MSTSolver(neighborhoods, connections)
+        result = solver.solve()
+        assert metrics.summary(result, solver) is not None
+        assert metrics.edges_table(result, solver) is not None
+        assert metrics.cost_by_terrain(result) is not None
+        assert metrics.node_degree(result, solver) is not None
+        assert metrics.regional_cost(result, solver) is not None
+
+    def test_economia_menor_que_custo_total(self):
+        from src.utils.data_loader import load
+        from src.algorithms.mst_solver import MSTSolver
+        neighborhoods, connections = load(DATASET)
+        solver = MSTSolver(neighborhoods, connections)
+        result = solver.solve()
+        assert result.savings <= solver.total_network_cost
+        assert 0 <= result.savings_pct <= 100

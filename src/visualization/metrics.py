@@ -2,8 +2,9 @@ from collections import Counter, defaultdict
 
 import pandas as pd
 
-from src.algorithms.kruskal import Edge
 from src.algorithms.mst_solver import MSTSolver, SolverResult
+
+HUB_CRITICAL_THRESHOLD = 3
 
 
 def summary(result: SolverResult, solver: MSTSolver) -> pd.DataFrame:
@@ -33,7 +34,7 @@ def edges_table(result: SolverResult, solver: MSTSolver) -> pd.DataFrame:
             "Terreno": e.metadata["terrain"].capitalize(),
             "Distância (km)": e.metadata["distance_km"],
             "Custo (k coroas)": e.weight,
-            "Custo/km": round(e.weight / e.metadata["distance_km"], 2),
+            "Custo/km": round(e.weight / e.metadata["distance_km"], 2) if e.metadata["distance_km"] > 0 else 0.0,
         })
     df = pd.DataFrame(rows)
     return df.sort_values("Custo (k coroas)").reset_index(drop=True)
@@ -55,7 +56,7 @@ def cost_by_terrain(result: SolverResult) -> pd.DataFrame:
             "Rotas": g["count"],
             "Distância total (km)": g["total_km"],
             "Custo total (k coroas)": g["total_cost"],
-            "% do custo MST": round(g["total_cost"] / result.total_cost * 100, 1),
+            "% do custo MST": round(g["total_cost"] / result.total_cost * 100, 1) if result.total_cost > 0 else 0.0,
         })
     return pd.DataFrame(rows).sort_values("Custo total (k coroas)", ascending=False).reset_index(drop=True)
 
@@ -73,7 +74,7 @@ def node_degree(result: SolverResult, solver: MSTSolver) -> pd.DataFrame:
             "Reino": neighborhoods[node_id].name,
             "Região": neighborhoods[node_id].region.replace("_", " ").capitalize(),
             "Conexões na MST": count,
-            "Hub crítico": "Sim" if count >= 3 else "Não",
+            "Hub crítico": "Sim" if count >= HUB_CRITICAL_THRESHOLD else "Não",
         }
         for node_id, count in degree.most_common()
     ]
@@ -95,7 +96,7 @@ def regional_cost(result: SolverResult, solver: MSTSolver) -> pd.DataFrame:
             "Região": region,
             "Rotas na MST": g["count"],
             "Custo (k coroas)": g["cost"],
-            "% do custo MST": round(g["cost"] / result.total_cost * 100, 1),
+            "% do custo MST": round(g["cost"] / result.total_cost * 100, 1) if result.total_cost > 0 else 0.0,
         }
         for region, g in sorted(groups.items())
     ]

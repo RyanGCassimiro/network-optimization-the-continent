@@ -8,6 +8,7 @@ Complexidade: O((V + E) log V) com heap de prioridade.
 
 import heapq
 from src.models.graph import FiberGraph
+from src.algorithms.kruskal import Edge, KruskalResult
 
 
 def prim_mst(graph: FiberGraph, start_node: str | None = None) -> dict:
@@ -86,6 +87,44 @@ def prim_mst(graph: FiberGraph, start_node: str | None = None) -> dict:
         "nodes_visited": nodes_visited,
         "algorithm": "Prim",
     }
+
+
+def prim(nodes: list[str], edges: list[Edge], start: str) -> KruskalResult:
+    """
+    Interface compatível com MSTSolver.
+
+    Constrói um FiberGraph a partir de nodes e edges, executa prim_mst()
+    e converte o resultado para KruskalResult.
+    """
+    graph = FiberGraph()
+    for node in nodes:
+        graph.add_node(node)
+
+    # Mantém apenas a aresta de menor peso para cada par de nós
+    edge_lookup: dict[frozenset, Edge] = {}
+    for edge in edges:
+        key = frozenset({edge.source, edge.target})
+        if key not in edge_lookup or edge.weight < edge_lookup[key].weight:
+            edge_lookup[key] = edge
+
+    for edge in edge_lookup.values():
+        graph.add_edge(edge.source, edge.target, weight=edge.weight)
+
+    raw = prim_mst(graph, start_node=start)
+
+    mst_edges = [
+        edge_lookup[frozenset({u, v})]
+        for u, v, _ in raw["edges"]
+        if frozenset({u, v}) in edge_lookup
+    ]
+
+    return KruskalResult(
+        mst_edges=mst_edges,
+        total_cost=raw["total_weight"],
+        is_connected=len(mst_edges) == len(nodes) - 1,
+        nodes_count=len(nodes),
+        edges_considered=len(edges),
+    )
 
 
 def prim_mst_summary(result: dict) -> str:

@@ -5,7 +5,6 @@ Projeto: Tema D - Otimização de Rede de Fibra Óptica (MST)
 """
 
 import networkx as nx
-from typing import Optional
 
 
 class FiberGraph:
